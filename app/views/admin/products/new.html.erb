@@ -1,4 +1,8 @@
 <h3>new products</h3>
 
-<%= render partial: 'admin/products/form' %>
+<% if Size.any? %>
+	<%= render partial: 'admin/products/form' %>
+<% else %>
+	<p>You need to create sizes <%= link_to 'click here', admin_sizes_path %></p>
+<% end %>
 
