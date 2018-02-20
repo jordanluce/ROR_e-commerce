@@ -15,12 +15,23 @@ class Admin::SizesController < Admin::BaseController
 	end
 
 	def edit
+		@size = Size.find(params[:id])
 	end
 
 	def update
+		@size = Size.find(params[:id])
+		if @size.update(strong_params)
+			redirect_to admin_sizes_path, notice: 'Size succesfully updated'
+		else
+			flash[:alert] = 'There was a problem updating your size'
+			render 'edit'
+		end
 	end
 
 	def destroy
+		@size = Size.find(params[:id])
+		@size.destroy
+		redirect_to admin_sizes_path, notice: 'Size was succesfully deleted'
 	end
 
 	private
