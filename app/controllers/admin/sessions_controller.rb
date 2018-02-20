@@ -8,8 +8,23 @@ class Admin::SessionsController < Admin::BaseController
 	end
 
 	def create
+		if admin
+			session[:current_admin_id] = admin.id
+			redirect_to admin_products_url, notice: 'You have successfully signed in'
+		else
+			flash[:alert] = 'There was a problem with your username or password'
+			render 'new'
+		end
 	end
 
 	def destroy
+		session[:current_admin_id] = nil
+		redirect_to '/login', notice: 'You have successfully signed out'
+	end
+
+	private
+
+	def admin
+		@admin ||= Admin.find_by(email: params[:email]).try(:authenticate, params[:password])
 	end
 end
