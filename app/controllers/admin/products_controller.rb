@@ -6,7 +6,7 @@ class Admin::ProductsController < Admin::BaseController
 
 	def new
 		@product = Product.new
-		@product.variants << variants
+		@product.variants << variants_service.variants
 	end
 
 	def show
@@ -25,7 +25,7 @@ class Admin::ProductsController < Admin::BaseController
 
 	def edit
 		@product = Product.find(params[:id])
-		@product.variants << missing_variants if variant_changed?
+		@product.variants << variants_service.missing_variants 
 	end
 
 	def update
@@ -50,20 +50,8 @@ class Admin::ProductsController < Admin::BaseController
 		params.require(:product).permit(:name, :price, :description, :image, variants_attributes: [:id, :size_id, :inventory])
 	end
 
-	def variants
-		@variant ||= Size.all.map {|size| Variant.new(size_id: size.id)}
-	end
-
-	def missing_variants_ids
-		variants.map{|v| v.size_id} - @product.variants.map{|v| v.size_id}
-	end
-
-	def missing_variants
-		missing_variants_ids.map{|id| Variant.new(size_id: id)}
-	end
-
-	def variant_changed?
-		variants.size != @product.variants.size
+	def variants_service
+		@variants_service ||= VariantsService.new(@product)
 	end
 
 end
