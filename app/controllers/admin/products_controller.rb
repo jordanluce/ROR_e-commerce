@@ -6,6 +6,7 @@ class Admin::ProductsController < Admin::BaseController
 
 	def new
 		@product = Product.new
+		@product.variants << variants
 	end
 
 	def show
@@ -45,7 +46,11 @@ class Admin::ProductsController < Admin::BaseController
 	private
 
 	def strong_params
-		params.require(:product).permit(:name, :price, :description, :image)
+		params.require(:product).permit(:name, :price, :description, :image, variants_attributes: [:id, :size_id, :inventory])
+	end
+
+	def variants
+		Size.all.map {|size| Variant.new(size_id: size.id)}
 	end
 
 end

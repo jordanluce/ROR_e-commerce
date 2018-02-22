@@ -5,5 +5,20 @@
 	<p><%= f.text_field :price, placeholder: 'Product price' %></p>
 	<p><%= f.text_area :description, placeholder: 'Product description' %></p>
 	<p><%= f.file_field :image %></p>
+
+	<hr>
+	<% @product.variants.each do |variant| %>
+		<%= f.fields_for :variants, variant do |ff| %>
+			<table>
+				<tr>
+					<td><%= variant.size.name %></td>
+					<td><%= ff.number_field :inventory %></td>
+				</tr>
+			</table>
+			<%= ff.hidden_field :size_id %>
+		<% end %>
+	<% end %>
+	<hr>
+
 	<p><%= f.submit 'Save Product' %></p>
 <% end %>
