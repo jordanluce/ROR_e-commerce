@@ -25,6 +25,7 @@ class Admin::ProductsController < Admin::BaseController
 
 	def edit
 		@product = Product.find(params[:id])
+		@product.variants << missing_variants if variant_changed?
 	end
 
 	def update
@@ -50,7 +51,19 @@ class Admin::ProductsController < Admin::BaseController
 	end
 
 	def variants
-		Size.all.map {|size| Variant.new(size_id: size.id)}
+		@variant ||= Size.all.map {|size| Variant.new(size_id: size.id)}
+	end
+
+	def missing_variants_ids
+		variants.map{|v| v.size_id} - @product.variants.map{|v| v.size_id}
+	end
+
+	def missing_variants
+		missing_variants_ids.map{|id| Variant.new(size_id: id)}
+	end
+
+	def variant_changed?
+		variants.size != @product.variants.size
 	end
 
 end
