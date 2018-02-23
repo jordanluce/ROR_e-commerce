@@ -47,7 +47,7 @@ class Admin::ProductsController < Admin::BaseController
 	private
 
 	def strong_params
-		params.require(:product).permit(:name, :price, :description, :image, variants_attributes: [:id, :size_id, :inventory])
+		params.require(:product).permit(:name, :price, :description, :image, :published, variants_attributes: [:id, :size_id, :inventory])
 	end
 
 	def variants_service

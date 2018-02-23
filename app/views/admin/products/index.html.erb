@@ -5,6 +5,7 @@
 		<tr>
 			<th>Name</th>
 			<th>Price</th>
+			<th>Published</th>
 			<th colspan="3">Actions</th>
 		</tr>
 
@@ -12,6 +13,7 @@
 		<tr>
 			<td><%= prod.name %></td>
 			<td><%= currency(prod.price) %></td>
+			<td><%= prod.published %></td>
 			<td><%= link_to 'Show', admin_product_path(prod) %></td>
 			<td><%= link_to 'Edit', edit_admin_product_path(prod) %></td>
 			<td><%= link_to 'Delete', admin_product_path(prod), method: :delete, data:{confirm:'Are you sure'} %></td>

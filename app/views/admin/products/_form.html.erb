@@ -5,6 +5,8 @@
 	<p><%= f.text_field :price, placeholder: 'Product price' %></p>
 	<p><%= f.text_area :description, placeholder: 'Product description' %></p>
 	<p><%= f.file_field :image %></p>
+	<p>published: <%= f.check_box :published %></p>
+
 
 	<hr>
 	<% @product.variants.each do |variant| %>
