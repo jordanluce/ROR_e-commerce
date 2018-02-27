@@ -1,37 +1,33 @@
-<h3>Customer</h3>
-
-<p>Name: <%= @customer.fullname %></p>
-<p>Name: <%= @customer.email %></p>
-<p>Name: <%= @customer.address %></p>
-
-<hr>
-
 <h3>Orders</h3>
 
-<% if @customer.orders.any? %>
+<% if @orders.any? %>
 <table>
 	<tr>
 		<th>Order No.</th>
+		<th>Customer</th>
 		<th>Product</th>
 		<th>Size</th>
 		<th>Quantity</th>
 		<th>Total</th>
+		<th>Actions</th>
 	</tr>
 
-	<% @customer.orders.each do |orders| %>
+	<% @orders.each do |orders| %>
 
 	<tr>
 		<td><%= orders.id %></td>
+		<td><%= orders.customer.fullname %></td>
 		<td><%= orders.product.name %></td>
 		<td><%= orders.size.name %></td>
 		<td><%= orders.quantity %></td>
 		<td><%= currency(orders.total) %></td>
+		<td><%= link_to 'show', admin_customer_path(orders.customer) %></td>
 	</tr>
 	<% end %>
 </table>
 
 <% else %>
-<p>There are no orders for <%= @customer.fullname %></p>
+<p>There are no orders to show</p>
 <% end %>
 
 
