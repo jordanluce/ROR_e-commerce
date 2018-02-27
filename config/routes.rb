@@ -7,6 +7,7 @@ namespace :admin do
 	resources :products
 	resources :sessions, only: [:new, :create, :destroy]
 	resources :sizes, except: [:show, :new]
+	resources :customers, only:[:index, :show, :destroy]
 end
 
 end
