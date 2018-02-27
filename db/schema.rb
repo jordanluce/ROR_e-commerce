@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180223105507) do
+ActiveRecord::Schema.define(version: 20180227115341) do
 
   create_table "admins", force: :cascade do |t|
     t.string "name", null: false
@@ -28,6 +28,19 @@ ActiveRecord::Schema.define(version: 20180223105507) do
     t.string "password_digest", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer "customer_id", null: false
+    t.integer "product_id", null: false
+    t.integer "size_id", null: false
+    t.integer "quantity", default: 1, null: false
+    t.decimal "total", precision: 10, scale: 2, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_orders_on_customer_id"
+    t.index ["product_id"], name: "index_orders_on_product_id"
+    t.index ["size_id"], name: "index_orders_on_size_id"
   end
 
   create_table "products", force: :cascade do |t|
